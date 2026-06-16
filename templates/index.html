@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="text-align: center; padding: 4rem 2rem;">
+    <h1 style="font-size: 3rem; margin-bottom: 1rem; color: #667eea;">💼 FreelanceFlow</h1>
+    <p style="font-size: 1.2rem; color: #6b7280; margin-bottom: 2rem;">
+        自由职业者的一站式管理平台。项目、时间、发票、客户 - 一切尽在掌握。
+    </p>
+    
+    <div style="display: flex; gap: 1rem; justify-content: center;">
+        <a href="{{ url_for('register') }}" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1.1rem;">
+            开始免费试用
+        </a>
+        <a href="{{ url_for('login') }}" class="btn btn-secondary" style="padding: 1rem 2rem; font-size: 1.1rem;">
+            已有账户？登录
+        </a>
+    </div>
+    
+    <div class="grid" style="margin-top: 4rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+        <div class="stat-card">
+            <h3>📊 项目管理</h3>
+            <p style="color: #6b7280; margin-top: 0.5rem;">轻松跟踪多个项目和客户</p>
+        </div>
+        <div class="stat-card">
+            <h3>⏱️ 时间追踪</h3>
+            <p style="color: #6b7280; margin-top: 0.5rem;">精确记录工作时间</p>
+        </div>
+        <div class="stat-card">
+            <h3>📄 发票生成</h3>
+            <p style="color: #6b7280; margin-top: 0.5rem;">一键生成专业发票</p>
+        </div>
+        <div class="stat-card">
+            <h3>👥 客户管理</h3>
+            <p style="color: #6b7280; margin-top: 0.5rem;">维护客户信息和历史</p>
+        </div>
+        <div class="stat-card">
+            <h3>📈 数据分析</h3>
+            <p style="color: #6b7280; margin-top: 0.5rem;">查看收入和工时统计</p>
+        </div>
+        <div class="stat-card">
+            <h3>🔐 安全可靠</h3>
+            <p style="color: #6b7280; margin-top: 0.5rem;">你的数据安全是我们的首要任务</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

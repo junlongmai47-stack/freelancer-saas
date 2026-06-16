@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}新建项目 - FreelanceFlow{% endblock %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 2rem auto;">
+    <h1 style="margin-bottom: 2rem;">新建项目</h1>
+    
+    <div class="card">
+        <form method="POST">
+            <div class="form-group">
+                <label for="name">项目名称 *</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">项目描述</label>
+                <textarea id="description" name="description" placeholder="项目的详细描述..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="rate">时薪 ($)</label>
+                <input type="number" id="rate" name="rate" step="0.01" placeholder="0.00">
+            </div>
+            
+            <div class="form-group">
+                <label for="budget">项目预算 ($)</label>
+                <input type="number" id="budget" name="budget" step="0.01" placeholder="0.00">
+            </div>
+            
+            <div class="form-group">
+                <label for="deadline">截止日期</label>
+                <input type="datetime-local" id="deadline" name="deadline">
+            </div>
+            
+            <div style="display: flex; gap: 1rem;">
+                <button type="submit" class="btn btn-primary" style="flex: 1;">创建项目</button>
+                <a href="{{ url_for('projects') }}" class="btn btn-secondary" style="flex: 1; text-align: center;">取消</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

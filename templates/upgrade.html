@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}升级 Pro - FreelanceFlow{% endblock %}
+
+{% block content %}
+<div style="max-width: 900px; margin: 3rem auto;">
+    <h1 style="text-align: center; margin-bottom: 2rem;">升级到 Pro 版本</h1>
+    
+    <div class="grid">
+        <div class="card" style="text-align: center;">
+            <h2 style="margin-bottom: 1rem;">免费版</h2>
+            <p class="value" style="color: #667eea; margin-bottom: 1.5rem;">$0</p>
+            <ul style="text-align: left; margin-bottom: 2rem;">
+                <li>✅ 基础项目管理</li>
+                <li>✅ 时间追踪</li>
+                <li>⏹️ 每月 2 张发票</li>
+                <li>⏹️ 基础客户管理</li>
+                <li>⏹️ 无分析报告</li>
+            </ul>
+        </div>
+        
+        <div class="card" style="text-align: center; border: 3px solid #667eea;">
+            <div style="background: #667eea; color: white; padding: 0.5rem; border-radius: 0.5rem; margin-bottom: 1rem;">推荐</div>
+            <h2 style="margin-bottom: 1rem;">Pro 版本</h2>
+            <p class="value" style="color: #10b981; margin-bottom: 1.5rem;">$19.99<span style="font-size: 0.7em; color: #6b7280;">/月</span></p>
+            <ul style="text-align: left; margin-bottom: 2rem;">
+                <li>✅ 无限制项目</li>
+                <li>✅ 无限时间追踪</li>
+                <li>✅ 无限制发票</li>
+                <li>✅ 高级客户管理</li>
+                <li>✅ 详细分析报告</li>
+                <li>✅ 优先支持</li>
+            </ul>
+            <form action="{{ url_for('checkout') }}" method="POST">
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem; font-size: 1.1rem;">
+                    立即升级
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

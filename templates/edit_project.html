@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}编辑项目 - FreelanceFlow{% endblock %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 2rem auto;">
+    <h1 style="margin-bottom: 2rem;">编辑项目</h1>
+    
+    <div class="card">
+        <form method="POST">
+            <div class="form-group">
+                <label for="name">项目名称 *</label>
+                <input type="text" id="name" name="name" value="{{ project.name }}" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">项目描述</label>
+                <textarea id="description" name="description">{{ project.description or '' }}</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="rate">时薪 ($)</label>
+                <input type="number" id="rate" name="rate" step="0.01" value="{{ project.rate or '' }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="budget">项目预算 ($)</label>
+                <input type="number" id="budget" name="budget" step="0.01" value="{{ project.budget or '' }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="status">状态</label>
+                <select id="status" name="status">
+                    <option value="active" {% if project.status == 'active' %}selected{% endif %}>进行中</option>
+                    <option value="completed" {% if project.status == 'completed' %}selected{% endif %}>已完成</option>
+                    <option value="on-hold" {% if project.status == 'on-hold' %}selected{% endif %}>暂停</option>
+                </select>
+            </div>
+            
+            <div style="display: flex; gap: 1rem;">
+                <button type="submit" class="btn btn-primary" style="flex: 1;">保存更改</button>
+                <a href="{{ url_for('projects') }}" class="btn btn-secondary" style="flex: 1; text-align: center;">取消</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

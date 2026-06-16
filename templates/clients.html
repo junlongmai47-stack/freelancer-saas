@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}客户 - FreelanceFlow{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h1>客户管理</h1>
+    <a href="{{ url_for('add_client') }}" class="btn btn-primary">+ 添加客户</a>
+</div>
+
+{% if clients %}
+    <div class="card">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>客户名称</th>
+                    <th>公司</th>
+                    <th>邮箱</th>
+                    <th>电话</th>
+                    <th>创建时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for client in clients %}
+                    <tr>
+                        <td><strong>{{ client.name }}</strong></td>
+                        <td>{{ client.company or 'N/A' }}</td>
+                        <td>{{ client.email or 'N/A' }}</td>
+                        <td>{{ client.phone or 'N/A' }}</td>
+                        <td>{{ client.created_at.strftime('%Y-%m-%d') }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    {% if pagination.pages > 1 %}
+        <div style="text-align: center; margin-top: 2rem;">
+            {% if pagination.has_prev %}
+                <a href="{{ url_for('clients', page=pagination.prev_num) }}" class="btn btn-secondary">上一页</a>
+            {% endif %}
+            <span style="margin: 0 1rem;">第 {{ pagination.page }} / {{ pagination.pages }} 页</span>
+            {% if pagination.has_next %}
+                <a href="{{ url_for('clients', page=pagination.next_num) }}" class="btn btn-secondary">下一页</a>
+            {% endif %}
+        </div>
+    {% endif %}
+{% else %}
+    <div class="card" style="text-align: center; padding: 3rem;">
+        <p style="color: #6b7280; margin-bottom: 1rem;">暂无客户</p>
+        <a href="{{ url_for('add_client') }}" class="btn btn-primary">添加第一个客户</a>
+    </div>
+{% endif %}
+{% endblock %}

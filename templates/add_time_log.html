@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}记录时间 - FreelanceFlow{% endblock %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 2rem auto;">
+    <h1 style="margin-bottom: 2rem;">记录工作时间</h1>
+    
+    <div class="card">
+        <form method="POST">
+            <div class="form-group">
+                <label for="project_id">选择项目 *</label>
+                <select id="project_id" name="project_id" required>
+                    <option value="">-- 选择项目 --</option>
+                    {% for project in projects %}
+                        <option value="{{ project.id }}">{{ project.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="hours">工时（小时）*</label>
+                <input type="number" id="hours" name="hours" step="0.5" min="0" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">描述</label>
+                <textarea id="description" name="description" placeholder="工作描述..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="logged_date">记录日期</label>
+                <input type="datetime-local" id="logged_date" name="logged_date">
+            </div>
+            
+            <div style="display: flex; gap: 1rem;">
+                <button type="submit" class="btn btn-primary" style="flex: 1;">记录时间</button>
+                <a href="{{ url_for('time_logs') }}" class="btn btn-secondary" style="flex: 1; text-align: center;">取消</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

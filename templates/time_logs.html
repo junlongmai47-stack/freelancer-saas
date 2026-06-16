@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}时间追踪 - FreelanceFlow{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h1>时间追踪</h1>
+    <a href="{{ url_for('add_time_log') }}" class="btn btn-primary">+ 记录时间</a>
+</div>
+
+{% if logs %}
+    <div class="card">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>项目</th>
+                    <th>工时</th>
+                    <th>描述</th>
+                    <th>记录时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                    <tr>
+                        <td><strong>{{ log.project.name }}</strong></td>
+                        <td>{{ "%.2f"|format(log.hours) }} h</td>
+                        <td>{{ log.description or 'N/A' }}</td>
+                        <td>{{ log.logged_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    {% if pagination.pages > 1 %}
+        <div style="text-align: center; margin-top: 2rem;">
+            {% if pagination.has_prev %}
+                <a href="{{ url_for('time_logs', page=pagination.prev_num) }}" class="btn btn-secondary">上一页</a>
+            {% endif %}
+            <span style="margin: 0 1rem;">第 {{ pagination.page }} / {{ pagination.pages }} 页</span>
+            {% if pagination.has_next %}
+                <a href="{{ url_for('time_logs', page=pagination.next_num) }}" class="btn btn-secondary">下一页</a>
+            {% endif %}
+        </div>
+    {% endif %}
+{% else %}
+    <div class="card" style="text-align: center; padding: 3rem;">
+        <p style="color: #6b7280; margin-bottom: 1rem;">暂无时间记录</p>
+        <a href="{{ url_for('add_time_log') }}" class="btn btn-primary">记录第一个工时</a>
+    </div>
+{% endif %}
+{% endblock %}

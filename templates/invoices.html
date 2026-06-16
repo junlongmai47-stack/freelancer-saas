@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}发票 - FreelanceFlow{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h1>发票管理</h1>
+    <a href="{{ url_for('create_invoice') }}" class="btn btn-primary">+ 创建发票</a>
+</div>
+
+{% if invoices %}
+    <div class="card">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>发票号</th>
+                    <th>客户</th>
+                    <th>金额</th>
+                    <th>状态</th>
+                    <th>创建时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for invoice in invoices %}
+                    <tr>
+                        <td><strong>{{ invoice.invoice_number }}</strong></td>
+                        <td>{{ invoice.client.name }}</td>
+                        <td>${{ "%.2f"|format(invoice.amount) }}</td>
+                        <td>
+                            {% if invoice.status == 'paid' %}
+                                <span class="badge badge-success">已支付</span>
+                            {% elif invoice.status == 'sent' %}
+                                <span class="badge badge-warning">已发送</span>
+                            {% else %}
+                                <span class="badge badge-danger">草稿</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ invoice.created_at.strftime('%Y-%m-%d') }}</td>
+                        <td>
+                            <a href="{{ url_for('download_invoice', invoice_id=invoice.id) }}" class="btn btn-sm btn-secondary">下载</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    {% if pagination.pages > 1 %}
+        <div style="text-align: center; margin-top: 2rem;">
+            {% if pagination.has_prev %}
+                <a href="{{ url_for('invoices', page=pagination.prev_num) }}" class="btn btn-secondary">上一页</a>
+            {% endif %}
+            <span style="margin: 0 1rem;">第 {{ pagination.page }} / {{ pagination.pages }} 页</span>
+            {% if pagination.has_next %}
+                <a href="{{ url_for('invoices', page=pagination.next_num) }}" class="btn btn-secondary">下一页</a>
+            {% endif %}
+        </div>
+    {% endif %}
+{% else %}
+    <div class="card" style="text-align: center; padding: 3rem;">
+        <p style="color: #6b7280; margin-bottom: 1rem;">暂无发票</p>
+        <a href="{{ url_for('create_invoice') }}" class="btn btn-primary">创建第一张发票</a>
+    </div>
+{% endif %}
+{% endblock %}

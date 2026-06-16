@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}仪表盘 - FreelanceFlow{% endblock %}
+
+{% block content %}
+<h1 style="margin-bottom: 2rem;">欢迎回来，{{ current_user.company_name or current_user.username }}！</h1>
+
+<div class="grid">
+    <div class="stat-card">
+        <h3>📊 活跃项目</h3>
+        <div class="value">{{ active_projects }}</div>
+    </div>
+    <div class="stat-card">
+        <h3>⏱️ 总工时</h3>
+        <div class="value">{{ "%.1f"|format(total_hours) }} h</div>
+    </div>
+    <div class="stat-card">
+        <h3>💰 总收入</h3>
+        <div class="value" style="color: #10b981;">${{ "%.2f"|format(total_income) }}</div>
+    </div>
+    <div class="stat-card">
+        <h3>📈 本月收入</h3>
+        <div class="value" style="color: #f59e0b;">${{ "%.2f"|format(monthly_income) }}</div>
+    </div>
+</div>
+
+<div style="margin-top: 2rem;">
+    <h2 style="margin-bottom: 1rem;">最近项目</h2>
+    
+    {% if recent_projects %}
+        <div class="card">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>项目名称</th>
+                        <th>状态</th>
+                        <th>时薪</th>
+                        <th>截止日期</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for project in recent_projects %}
+                        <tr>
+                            <td>{{ project.name }}</td>
+                            <td>
+                                {% if project.status == 'active' %}
+                                    <span class="badge badge-success">进行中</span>
+                                {% elif project.status == 'completed' %}
+                                    <span class="badge badge-success">已完成</span>
+                                {% else %}
+                                    <span class="badge badge-warning">暂停</span>
+                                {% endif %}
+                            </td>
+                            <td>${{ project.rate or 'N/A' }}</td>
+                            <td>{{ project.deadline.strftime('%Y-%m-%d') if project.deadline else 'N/A' }}</td>
+                            <td>
+                                <a href="{{ url_for('edit_project', project_id=project.id) }}" class="btn btn-sm btn-secondary">编辑</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="card">
+            <p style="text-align: center; color: #6b7280;">暂无项目。<a href="{{ url_for('create_project') }}">创建一个新项目</a></p>
+        </div>
+    {% endif %}
+</div>
+
+<div style="margin-top: 2rem; text-align: center;">
+    <a href="{{ url_for('upgrade') }}" class="btn btn-primary">升级到 Pro 版本</a>
+</div>
+{% endblock %}
